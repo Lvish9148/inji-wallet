@@ -53,22 +53,32 @@ public class HistoryPage extends BasePage {
     }
 
     private boolean verifyHistoryAndroidformdl() {
-        By locator = By.xpath("//*[contains(@text,'Mobile Driving License is downloaded.')]");
+        By locator = By.xpath("//*[contains(@text,'DrivingLicenseCredential is downloaded.')]");
         return isElementVisible(locator, "Verifying downloaded mDL history record on Android");
     }
 
     private boolean verifyHistoryAndroidforMock() {
-        By locator = By.xpath("//*[@name=\"Mock Verifiable Credential is downloaded.\"]");
+        By locator = By.xpath("//*[contains(@text,'Mock Verifiable Credential (SD-JWT) is downloaded.')]");
         return isElementVisible(locator, "Verifying downloaded Mock VC history record on Android");
     }
 
     private boolean verifyHistoryIosMock() {
-        By locator = By.xpath("//*[@name=\"Mock Verifiable Credential is downloaded.\"]");
+        By locator = By.xpath("//*[contains(@text,'Mock Verifiable Credential (SD-JWT) is downloaded.')]");
         return isElementVisible(locator, "Verifying downloaded Mock VC history record on iOS");
     }
 
+    private boolean verifyDeleteHistoryAndroidMock() {
+      By locator = By.xpath("//*[contains(@text,'Mock Verifiable Credential (SD-JWT) is removed from wallet.')]");
+      return isElementVisible(locator, "Verifying delete history Mock VC history record on Android");
+    }
+
+    private boolean verifyDeleteHistoryIosMock() {
+      By locator = By.xpath("//*[contains(@text,'Mock Verifiable Credential (SD-JWT) is removed from wallet.')]");
+      return isElementVisible(locator, "Verifying delete history Mock VC history record on iOS");
+    }
+
     private boolean verifyHistoryIosmdl() {
-        By locator = By.xpath("//XCUIElementTypeStaticText[@name=\"Mobile Driving License is downloaded.\"]");
+        By locator = By.xpath("//XCUIElementTypeStaticText[@name=\"DrivingLicenseCredential is downloaded.\"]");
         return isElementVisible(locator, "Verifying downloaded mDL history record on iOS");
     }
 
@@ -99,6 +109,16 @@ public class HistoryPage extends BasePage {
     private boolean verifyDeletedHistoryIosInsuranceCard(String vcNumber) {
         By locator = By.xpath("//*[contains(@name,'Health Insurance is removed from wallet.')]");
         return isElementVisible(locator, "Verifying deleted Health Insurance record on iOS");
+    }
+
+    private boolean verifyDeleteHistoryAndroidMdl() {
+        By locator = By.xpath("//*[contains(@text,'DrivingLicenseCredential is removed from wallet.')]");
+        return isElementVisible(locator, "Verifying deleted mDL history record on Android");
+    }
+
+    private boolean verifyDeleteHistoryIosMdl() {
+        By locator = By.xpath("//*[contains(@name,'DrivingLicenseCredential is removed from wallet.')]");
+        return isElementVisible(locator, "Verifying deleted mDL history record on iOS");
     }
 
     private int verifyNumberOfRecordsInHistoryAndroid(String vcNumber) throws InterruptedException {
@@ -132,6 +152,13 @@ public class HistoryPage extends BasePage {
             case ANDROID -> verifyHistoryAndroidforMock();
             case IOS -> verifyHistoryIosMock();
         };
+    }
+
+    public boolean verifyDeleteHistoryForMock(PlatformType os) {
+      return switch (os) {
+        case ANDROID -> verifyDeleteHistoryAndroidMock();
+        case IOS -> verifyDeleteHistoryIosMock();
+      };
     }
 
     public boolean verifyHistoryForInsuranceCard(String vcNumber, PlatformType os) {
@@ -174,6 +201,13 @@ public class HistoryPage extends BasePage {
         };
     }
 
+    public boolean verifyMockMdlDeleteHistory(PlatformType os) {
+        return switch (os) {
+            case ANDROID -> verifyDeleteHistoryAndroidMdl();
+            case IOS -> verifyDeleteHistoryIosMdl();
+        };
+    }
+
     public boolean verifyActivationFailedRecordInHistory(String vcNumber, PlatformType os) {
         return switch (os) {
             case ANDROID -> verifyActivationFailedRecordAndroid(vcNumber);
@@ -181,7 +215,36 @@ public class HistoryPage extends BasePage {
         };
     }
 
-    private boolean verifyActivationFailedRecordIos(String vcNumber) {
+    public boolean verifyHistoryForFarmerCredential(String vcNumber,PlatformType os){
+      return switch (os) {
+        case ANDROID -> verifyHistoryAndroidForFarmer(vcNumber);
+        case IOS -> verifyHistoryIosForFarmer(vcNumber);
+      };
+    }
+
+    public boolean verifyHistoryForLandCredential(String vcNumber, PlatformType os){
+      return switch (os) {
+        case ANDROID -> verifyHistoryAndroidForLand(vcNumber);
+        case IOS -> verifyHistoryIosForLand(vcNumber);
+      };
+    }
+
+    public boolean verifyDeleteHistoryFarmerCredential(String vcNumber, PlatformType os) {
+      return switch (os) {
+        case ANDROID -> verifyDeleteHistoryAndroidForFarmer(vcNumber);
+        case IOS -> verifyDeleteHistoryIosForFarmer(vcNumber);
+      };
+    }
+
+    public boolean verifyDeleteHistoryLandCredential(String vcNumber, PlatformType os) {
+      return switch (os) {
+        case ANDROID -> verifyDeleteHistoryAndroidForLand(vcNumber);
+        case IOS -> verifyDeleteHistoryIosForLand(vcNumber);
+      };
+    }
+
+
+  private boolean verifyActivationFailedRecordIos(String vcNumber) {
         By locator = By.xpath("//*[contains(@name,'National ID has failed.')]");
         return isElementVisible(locator, "Verifying failed activation record of National ID on iOS");
     }
@@ -206,5 +269,45 @@ public class HistoryPage extends BasePage {
     private boolean verifyActivationSuccessfulRecordAndroid(String vcNumber) {
         By locator = By.xpath("//*[contains(@text,'Activation of MOSIP National ID is successful.')]");
         return isElementVisible(locator, "Verifying successful activation of National ID on Android");
+    }
+
+    private boolean verifyHistoryAndroidForFarmer(String vcNumber){
+      By locator = By.xpath("//*[contains(@text,'Farmer Credential With Face is downloaded.')]");
+      return isElementVisible(locator, "Verifying downloaded Farmer Credential history record on Android");
+    }
+
+    private boolean verifyHistoryIosForFarmer(String vcNumber){
+      By locator = By.xpath("//*[contains(@text,'Farmer Credential With Face is downloaded.')]");
+      return isElementVisible(locator, "Verifying downloaded Farmer Credential history record on Ios");
+    }
+
+    private boolean verifyHistoryAndroidForLand(String vcNumber){
+      By locator = By.xpath("//*[contains(@text,'STATEMENT OF THE STATUS OF INFORMATION DECLARED IN CAR is downloaded.')]");
+      return isElementVisible(locator, "Verifying downloaded Land Credential history record on Android");
+    }
+
+    private boolean verifyHistoryIosForLand(String vcNumber){
+      By locator = By.xpath("//*[contains(@name,'STATEMENT OF THE STATUS OF INFORMATION DECLARED IN CAR is downloaded.')]");
+      return isElementVisible(locator, "Verifying downloaded Land Credential history record on iOS");
+    }
+
+    private boolean verifyDeleteHistoryAndroidForFarmer(String vcNumber) {
+      By locator = By.xpath("//*[contains(@text,'Farmer Credential With Face is removed from wallet.')]");
+      return isElementVisible(locator, "Verifying deleted Farmer Credential record on Android");
+    }
+
+    private boolean verifyDeleteHistoryIosForFarmer(String vcNumber) {
+      By locator = By.xpath("//*[contains(@name,'Farmer Credential With Face is removed from wallet.')]");
+      return isElementVisible(locator, "Verifying deleted Farmer Credential record on iOS");
+    }
+
+    private boolean verifyDeleteHistoryAndroidForLand(String vcNumber) {
+      By locator = By.xpath("//*[contains(@text,'STATEMENT OF THE STATUS OF INFORMATION DECLARED IN CAR is removed from wallet.')]");
+      return isElementVisible(locator, "Verifying deleted Land Credential record on Android");
+    }
+
+    private boolean verifyDeleteHistoryIosForLand(String vcNumber) {
+      By locator = By.xpath("//*[contains(@name,'STATEMENT OF THE STATUS OF INFORMATION DECLARED IN CAR is removed from wallet.')]");
+      return isElementVisible(locator, "Verifying deleted Land Credential record on iOS");
     }
 }

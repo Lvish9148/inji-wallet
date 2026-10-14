@@ -65,7 +65,6 @@ public class MoreOptionsPage extends BasePage {
 				"Clicking on 'Remove from Wallet' button");
 		return new PleaseConfirmPopupPage(driver);
 	}
-
 	public void clickOnPinOrUnPinCard() {
 		click(pinOrUnPinCardButton, "Clicking on 'Pin/Unpin Card' button");
 	}

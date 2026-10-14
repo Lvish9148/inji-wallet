@@ -29,7 +29,7 @@ buildIdentifier: '#${BUILD_NUMBER}' # Supports strings along with either/both ${
 # OR
 # app: 'bs://<app-id>' # App URL returned when uploading the app to BrowserStack manually
 # Visit https://www.browserstack.com/docs/app-automate/appium/set-up-tests/specify-app for more options
-app: bs://06eb550d8b2b490bd55f35508ff66383e3ab2f33 # BrowserStack Sample App
+app: # BrowserStack Sample App
 
 # =======================================
 # Platforms (Browsers / Devices to test)
@@ -72,7 +72,7 @@ browserstackLocal: true # <boolean> (Default false)
 # ===================
 # Debugging features
 # ===================
-debug: true # <boolean> # Set to true if you need screenshots for every selenium command ran
+debug: false # <boolean> # Set to true if you need screenshots for every selenium command ran
 networkLogs: false # <boolean> Set to true to enable HAR logs capturing
 consoleLogs: errors # <string> Remote browser's console debug levels to be printed (Default: errors)
 # Available options are `disable`, `errors`, `warnings`, `info`, `verbose` (Default: errors)

@@ -22,15 +22,15 @@ public class SunbirdLoginPage extends BasePage {
 	@AndroidFindBy(xpath = "//*[contains(@text,'Login with KBA')]")
 	private WebElement loginWithKBA;
 
-	@AndroidFindBy(xpath = "//*[@resource-id=\"_form_policyNumber\"]")
+	@AndroidFindBy(xpath = "//*[@resource-id=\"policyNumber\"]")
 	@iOSXCUITFindBy(xpath = "//XCUIElementTypeTextField[@value=\"Policy Number\"]")
 	private WebElement enterPolicyTextBox;
 
-	@AndroidFindBy(xpath = "//android.widget.EditText[@resource-id=\"_form_fullName\"]")
+	@AndroidFindBy(xpath = "//android.widget.EditText[@resource-id=\"fullName\"]")
 	@iOSXCUITFindBy(xpath = "//XCUIElementTypeTextField[@value=\"Full Name\"]")
 	private WebElement enterFullNameTextBox;
 
-	@AndroidFindBy(xpath = "//android.widget.DatePicker[@resource-id=\"_form_dob\"]")
+	@AndroidFindBy(xpath = "//android.widget.EditText[@resource-id=\"dob\"]")
 	@iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeOther[`name == \"eSignet\"`]/XCUIElementTypeOther[10]")
 	private WebElement enterDateOfBirthTextBox;
 
@@ -192,14 +192,27 @@ public class SunbirdLoginPage extends BasePage {
 	@iOSXCUITFindBy(accessibility = "Continue")
 	private WebElement continuePopupButton;
 
+  @AndroidFindBy(xpath= "//android.view.View[@resource-id=\"language_selection\"]")
+  @iOSXCUITFindBy(xpath = "//*[@id=\"language_selection\"]")
+  private WebElement languageDropDown;
+
+  @AndroidFindBy(xpath = "//android.view.MenuItem[@resource-id=\"en0\"]")
+  @iOSXCUITFindBy(xpath = "//*[@id=\"en0\"]")
+  private WebElement englishLanguageButton;
+
 	public void clickOnLoginWithKbaButton() {
 		click(loginWithKBA, "Click on 'Login with KBA' button");
 	}
-
 	public void enterPolicyNumber(String policyNo) {
 		click(continuePopupButton, "Click on continue button in popup before entering policy number");
+    changeLanguageFix();
 		enterText(enterPolicyTextBox, policyNo, "Enter policy number: " + policyNo);
 	}
+
+  public void changeLanguageFix(){
+      click(languageDropDown,"Clicking on language dropdown");
+      click(englishLanguageButton,"Changing to english language");
+  }
 
 	public void enterFullName(String fullName) {
 		enterText(enterFullNameTextBox, fullName, "Enter full name: " + fullName);
