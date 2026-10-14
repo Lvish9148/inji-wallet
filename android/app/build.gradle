@@ -334,6 +334,7 @@ dependencies {
         implementation jscFlavor
     }
     implementation 'com.jakewharton.timber:timber:4.7.1'
+    implementation "com.google.android.play:integrity:1.6.0"
 }
 
 task copyFaceSdkModel(type: Copy) {
