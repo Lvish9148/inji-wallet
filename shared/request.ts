@@ -6,6 +6,7 @@ import {__AppId} from './GlobalVariables';
 import {MIMOTO_BASE_URL, REQUEST_TIMEOUT} from './constants';
 import NetInfo from '@react-native-community/netinfo';
 import {ErrorMessage} from './openId4VCI/Utils';
+import {getIntegrityHeaders} from './integrity/playIntegrity';
 
 export type HTTP_METHOD = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
 
@@ -39,6 +40,18 @@ export async function request(
   if (path.includes('v1/mimoto')) {
     requestHeaders['X-AppId'] = __AppId.getValue();
   }
+  const bodyString = body ? JSON.stringify(body) : undefined;
+  if (
+    path.startsWith('/') &&
+    path.includes('v1/mimoto') &&
+    !path.includes('integrity/nonce') &&
+    host === MIMOTO_BASE_URL
+  ) {
+    Object.assign(
+      requestHeaders,
+      await getIntegrityHeaders(method, path, bodyString ?? '', host),
+    );
+  }
 
   const requestUrl = path.startsWith('https://') ? path : host + path;
   let response;
@@ -48,7 +61,7 @@ export async function request(
       response = await fetch(requestUrl, {
         method,
         headers: requestHeaders,
-        body: body ? JSON.stringify(body) : undefined,
+        body: bodyString,
       });
     } else {
       console.info(`Making a web request to ${requestUrl}`);
@@ -59,7 +72,7 @@ export async function request(
         response = await fetch(requestUrl, {
           method,
           headers: requestHeaders,
-          body: body ? JSON.stringify(body) : undefined,
+          body: bodyString,
           signal: controller.signal,
         });
       } catch (error: any) {
