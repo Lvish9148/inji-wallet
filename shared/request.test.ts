@@ -1,5 +1,8 @@
 import {BackendResponseError, request} from './request';
 
+jest.mock('./integrity/playIntegrity', () => ({
+  getIntegrityHeaders: jest.fn().mockResolvedValue({}),
+}));
 jest.mock('./GlobalVariables', () => ({
   __AppId: {getValue: jest.fn().mockReturnValue('test-app-id')},
 }));

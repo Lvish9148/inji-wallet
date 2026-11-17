@@ -1,4 +1,8 @@
 fileignoreconfig:
+- filename: shared/integrity/playIntegrity.ts
+  checksum: 5b640ae60ffaab16f984fe209f66a83285fb35178d725cdaf7e496c29465c6b7
+- filename: android/app/src/main/java/io/mosip/residentapp/PlayIntegrityModule.kt
+  checksum: fdf5530e8e97a45e15f8b6a3113a320ad62f9c9b953bbb7bdc6864d512490fa0
 
 - filename: components/VC/common/StatusInfoModal.tsx
   checksum: 5db61aa419e0c1c70b067993272da93822917daa55523371fc196022bd7c25a3
